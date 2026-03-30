@@ -1,0 +1,41 @@
+{
+  "name": "Post",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "venue_id": {
+      "type": "string"
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "moment",
+        "review",
+        "story"
+      ],
+      "default": "moment"
+    }
+  },
+  "required": [
+    "content",
+    "author_email"
+  ]
+}

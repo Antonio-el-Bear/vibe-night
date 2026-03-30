@@ -1,0 +1,29 @@
+{
+  "name": "RSVP",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "going",
+        "interested",
+        "not_going"
+      ],
+      "default": "going"
+    },
+    "guests": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "event_id",
+    "user_email"
+  ]
+}
