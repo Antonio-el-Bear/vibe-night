@@ -1,3 +1,17 @@
+// VenueCard component implementation
+// This fixes import errors in pages that expect a default export.
+// Customize this component as needed for your UI.
+import React from "react";
+
+export default function VenueCard({ venue }) {
+	if (!venue) return null;
+	return (
+		<div className="rounded-xl border p-4 mb-2">
+			<h3 className="font-bold text-lg">{venue.name || "Venue"}</h3>
+			{/* Add more venue details here as needed */}
+		</div>
+	);
+}
 
 // Detect if running in Node.js (SSR) or browser
 const isNode = typeof window === 'undefined';
