@@ -14,7 +14,7 @@ export default function Profile() {
 
   useEffect(() => {
     async function fetchData() {
-      const userData = null; // Placeholder since base44 is removed
+      const userData = null; // base44 removed, replace with real user fetch logic
       setUser(userData);
       if (userData) {
         const [posts, rsvps] = await Promise.all([
@@ -94,7 +94,8 @@ export default function Profile() {
             variant="outline"
             size="sm"
             className="rounded-full gap-1.5 text-destructive hover:text-destructive"
-            onClick={() => base44.auth.logout()}
+            // base44 removed, replace with real logout logic
+            onClick={() => {/* TODO: Implement logout */}}
           >
             <LogOut className="w-4 h-4" />
             Sign Out

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+// Removed base44 import (legacy)
 import { ArrowLeft, MapPin, Star, Clock, Share2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
