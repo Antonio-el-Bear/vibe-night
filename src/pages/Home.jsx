@@ -80,7 +80,8 @@ export default function Home() {
 
       {/* Social Feed */}
       <section className="px-4 mb-8">
-        <SectionHeader title="The Vibe" subtitle="What people are saying" />
+        {/* SectionHeader requires 'linkTo' prop. Provide a placeholder or actual route. */}
+        <SectionHeader title="The Vibe" subtitle="What people are saying" linkTo="/vibe" />
         <CreatePostForm onPostCreated={(newPost) => setPosts(prev => [newPost, ...prev])} />
         <div className="space-y-4 mt-4">
           {posts.map((post, i) => (

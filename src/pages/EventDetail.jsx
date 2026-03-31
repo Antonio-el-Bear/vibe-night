@@ -84,8 +84,9 @@ export default function EventDetail() {
         className="px-4 -mt-16 relative z-10"
       >
         <div className="flex gap-2 mb-3">
-          {event.genre && <Badge className="bg-primary/80 text-white border-0">{event.genre}</Badge>}
-          {event.status === 'live' && <Badge className="bg-red-500 text-white border-0 animate-pulse">LIVE</Badge>}
+          {/* Badge requires a 'variant' prop. Use 'default' for genre, 'destructive' for live status. */}
+          {event.genre && <Badge variant="default" className="bg-primary/80 text-white border-0">{event.genre}</Badge>}
+          {event.status === 'live' && <Badge variant="destructive" className="bg-red-500 text-white border-0 animate-pulse">LIVE</Badge>}
         </div>
 
         <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">{event.title}</h1>

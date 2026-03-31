@@ -1,6 +1,10 @@
+
+// Detect if running in Node.js (SSR) or browser
 const isNode = typeof window === 'undefined';
-const windowObj = isNode ? { localStorage: new Map() } : window;
-const storage = windowObj.localStorage;
+// Use a dummy storage object for SSR, otherwise use browser localStorage
+const storage = isNode
+	? { setItem: () => {}, getItem: () => null, removeItem: () => {} }
+	: window.localStorage;
 
 const toSnakeCase = (str) => {
 	return str.replace(/([A-Z])/g, '_$1').toLowerCase();
@@ -10,14 +14,13 @@ const getAppParamValue = (paramName, { defaultValue = undefined, removeFromUrl =
 	if (isNode) {
 		return defaultValue;
 	}
-	const storageKey = `base44_${toSnakeCase(paramName)}`;
-	const storageKey = `placeholder_${toSnakeCase(paramName)}`; // TODO: Replace base44 storage and env usage with new logic
+	// Use a single storageKey, not duplicate declarations
+	const storageKey = `placeholder_${toSnakeCase(paramName)}`; // Updated key
 	const urlParams = new URLSearchParams(window.location.search);
 	const searchParam = urlParams.get(paramName);
 	if (removeFromUrl) {
 		urlParams.delete(paramName);
-		const newUrl = `${window.location.pathname}${urlParams.toString() ? `?${urlParams.toString()}` : ""
-			}${window.location.hash}`;
+		const newUrl = `${window.location.pathname}${urlParams.toString() ? `?${urlParams.toString()}` : ""}${window.location.hash}`;
 		window.history.replaceState({}, document.title, newUrl);
 	}
 	if (searchParam) {

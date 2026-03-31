@@ -73,8 +73,9 @@ export default function VenueDetail() {
         animate={{ opacity: 1, y: 0 }}
         className="px-4 -mt-12 relative z-10"
       >
+        {/* Badge requires a 'variant' prop. Use 'default' for category. */}
         {venue.category && (
-          <Badge className="bg-primary/80 text-white border-0 mb-3">{venue.category}</Badge>
+          <Badge variant="default" className="bg-primary/80 text-white border-0 mb-3">{venue.category}</Badge>
         )}
         <h1 className="text-3xl font-display font-bold text-foreground mb-2">{venue.name}</h1>
 
