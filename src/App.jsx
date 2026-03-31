@@ -8,7 +8,7 @@ import PageNotFound from './lib/PageNotFound';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
-import Events from './pages/Events';
+import Events from './pages/Event';
 import EventDetail from './pages/EventDetail';
 import Venues from './pages/Venues';
 import VenueDetail from './pages/VenueDetail';
