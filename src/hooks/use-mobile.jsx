@@ -34,7 +34,6 @@ const getAppParamValue = (paramName, { defaultValue = undefined, removeFromUrl =
 }
 
 
-// Updated to use custom VITE_ variables instead of VITE_BASE44_
 const getAppParams = () => {
 	if (getAppParamValue("clear_access_token") === 'true') {
 		storage.removeItem('token');
