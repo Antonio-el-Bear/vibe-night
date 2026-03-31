@@ -58,6 +58,7 @@ export default function Profile() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
       >
+        {/* Avatar, AvatarImage, and AvatarFallback props are correct for Radix UI. */}
         <Avatar className="w-24 h-24 mx-auto mb-4 border-2 border-primary/30">
           <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${user.email}`} />
           <AvatarFallback className="bg-primary/20 text-primary text-2xl">{initials}</AvatarFallback>
