@@ -1,0 +1,16 @@
+{
+  "name": "VibeNight",
+  "short_name": "VibeNight",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#8b5cf6",
+  "description": "Discover and share the vibe at local events and venues.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
