@@ -26,7 +26,7 @@ export default function Layout() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-pink-500 flex items-center justify-center">
               <span className="text-white font-bold text-lg">B</span>
             </div>
-            <span className="hidden lg:block font-display text-xl font-bold text-foreground">Bambi</span>
+            <span className="hidden lg:block font-display text-xl font-bold text-foreground">Vibenight</span>
           </Link>
         </div>
         <nav className="flex-1 px-3 lg:px-4 mt-4 space-y-1">
