@@ -17,16 +17,59 @@ export default function Explore() {
   const [activeGenre, setActiveGenre] = useState('All');
 
   useEffect(() => {
-    async function fetchData() {
-      const [ev, ve] = await Promise.all([
-        [], // Placeholder for events
-        [], // Placeholder for venues
-      ]);
-      setEvents(ev);
-      setVenues(ve);
-      setLoading(false);
-    }
-    fetchData();
+    // Fake events data
+    const fakeEvents = [
+      {
+        id: 1,
+        title: 'Vibe Fest',
+        genre: 'Afrobeats',
+        venue_name: 'Club Vibenight',
+        date: '2026-04-15',
+        description: 'A night of Afrobeats and fun!'
+      },
+      {
+        id: 2,
+        title: 'House Party',
+        genre: 'House',
+        venue_name: 'The Groove Lounge',
+        date: '2026-04-20',
+        description: 'House music all night long.'
+      },
+      {
+        id: 3,
+        title: 'Jazz & Chill',
+        genre: 'Jazz',
+        venue_name: 'Blue Note',
+        date: '2026-04-22',
+        description: 'Smooth jazz and good vibes.'
+      }
+    ];
+
+    // Fake venues data
+    const fakeVenues = [
+      {
+        id: 1,
+        name: 'Club Vibenight',
+        location: 'Downtown',
+        capacity: 300
+      },
+      {
+        id: 2,
+        name: 'The Groove Lounge',
+        location: 'Uptown',
+        capacity: 150
+      },
+      {
+        id: 3,
+        name: 'Blue Note',
+        location: 'City Center',
+        capacity: 100
+      }
+    ];
+
+    setEvents(fakeEvents);
+    setVenues(fakeVenues);
+    setLoading(false);
   }, []);
 
   const filteredEvents = events.filter(e => {
