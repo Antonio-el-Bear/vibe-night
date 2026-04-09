@@ -28,6 +28,7 @@ export default function CreatePostForm({ onPostCreated }) {
   return (
     <form onSubmit={handleSubmit} className="bg-card rounded-2xl border border-border/50 p-4">
       <div className="flex gap-3">
+        {/* Avatar, AvatarImage, and AvatarFallback props are correct for Radix UI. */}
         <Avatar className="w-9 h-9 border border-primary/20 flex-shrink-0">
           <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${user.email}`} />
           <AvatarFallback className="bg-primary/20 text-primary text-xs">

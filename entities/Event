@@ -1,0 +1,80 @@
+{
+  "name": "Event",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "venue_name": {
+      "type": "string"
+    },
+    "venue_id": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "time": {
+      "type": "string"
+    },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "House",
+        "Afrobeats",
+        "Hip Hop",
+        "Amapiano",
+        "Techno",
+        "R&B",
+        "Jazz",
+        "Live Band",
+        "Mixed"
+      ]
+    },
+    "price": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "ZAR"
+    },
+    "capacity": {
+      "type": "number"
+    },
+    "rsvp_count": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "upcoming",
+        "live",
+        "sold_out",
+        "past"
+      ],
+      "default": "upcoming"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "title",
+    "date"
+  ]
+}

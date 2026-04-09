@@ -1,0 +1,61 @@
+{
+  "name": "Venue",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Club",
+        "Lounge",
+        "Rooftop",
+        "Bar",
+        "Live Venue",
+        "Festival Ground"
+      ]
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "vibe_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "price_level": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "opening_hours": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "location"
+  ]
+}

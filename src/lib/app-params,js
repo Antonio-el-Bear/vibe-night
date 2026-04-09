@@ -36,15 +36,15 @@ const getAppParamValue = (paramName, { defaultValue = undefined, removeFromUrl =
 
 const getAppParams = () => {
 	if (getAppParamValue("clear_access_token") === 'true') {
-		storage.removeItem('placeholder_access_token'); // TODO: Replace base44 storage and env usage with new logic
+		storage.removeItem('placeholder_access_token');
 		storage.removeItem('token');
 	}
 	return {
-		appId: getAppParamValue("app_id", { defaultValue: 'placeholder_app_id' }), // TODO: Replace base44 storage and env usage with new logic
+		appId: getAppParamValue("app_id", { defaultValue: import.meta.env.VITE_APP_ID }),
 		token: getAppParamValue("access_token", { removeFromUrl: true }),
 		fromUrl: getAppParamValue("from_url", { defaultValue: window.location.href }),
-		functionsVersion: getAppParamValue("functions_version", { defaultValue: 'placeholder_functions_version' }), // TODO: Replace base44 storage and env usage with new logic
-		appBaseUrl: getAppParamValue("app_base_url", { defaultValue: 'placeholder_app_base_url' }), // TODO: Replace base44 storage and env usage with new logic
+		functionsVersion: getAppParamValue("functions_version", { defaultValue: import.meta.env.VITE_FUNCTIONS_VERSION }),
+		appBaseUrl: getAppParamValue("app_base_url", { defaultValue: import.meta.env.VITE_API_URL }),
 	}
 }
 
