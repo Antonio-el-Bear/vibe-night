@@ -1,6 +1,20 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
-import { appParams } from '@/lib/app-params';
+
+import { appParams } from '@/lib/app-params.js';
+import axios from 'axios';
+
+// Basic Axios client factory
+function createAxiosClient({ baseURL, headers = {}, token, interceptResponses }) {
+  const instance = axios.create({ baseURL, headers });
+  if (token) {
+    instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+  // Optionally add interceptors here if needed
+  return instance;
+}
+
+// Placeholder for currentUser (replace with real logic)
+const currentUser = { id: 'demo', name: 'Demo User', email: 'demo@example.com', role: 'user' };
 // Removed legacy base44 import. Use axios directly if needed.
 
 const AuthContext = createContext();
