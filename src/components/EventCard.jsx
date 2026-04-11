@@ -46,11 +46,11 @@ export default function EventCard({ event, featured = false }) {
         </div>
 
         {/* Bottom info */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/60 rounded-b-2xl">
           <h3 className={`font-bold text-white mb-1 group-hover:text-primary transition-colors ${featured ? 'text-2xl font-display' : 'text-base'}`}>
             {event.title}
           </h3>
-          <div className="flex items-center gap-3 text-white/70 text-sm">
+          <div className="flex items-center gap-3 text-white/70 text-sm mb-1">
             <span className="flex items-center gap-1">
               <MapPin className="w-3.5 h-3.5" />
               {event.venue_name}
@@ -59,6 +59,17 @@ export default function EventCard({ event, featured = false }) {
               <CalendarDays className="w-3.5 h-3.5" />
               {event.time || eventDate.format('h:mm A')}
             </span>
+          </div>
+          {event.description && (
+            <div className="text-xs text-white/80 mb-1 line-clamp-2">{event.description}</div>
+          )}
+          <div className="flex items-center gap-3 text-xs text-white/60">
+            <span>RSVPs: <span className="text-white font-semibold">{event.rsvp_count || 0}</span></span>
+            {event.price ? (
+              <span>Price: <span className="text-white font-semibold">R{event.price}</span></span>
+            ) : (
+              <span className="text-emerald-400 font-semibold">FREE</span>
+            )}
           </div>
         </div>
       </div>
