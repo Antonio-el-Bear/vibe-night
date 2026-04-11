@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import { useLocation } from 'react-router-dom';
 
-
-=======
-
 export default function PageNotFound() {
->>>>>>> 30d361f520b38810fb2ab9df887e38ecc1f0ddb5
     const location = useLocation();
     const pageName = location.pathname.substring(1);
 
