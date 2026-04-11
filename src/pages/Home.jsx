@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { demoEvents } from '../lib/query-clients';
 import { motion } from 'framer-motion';
 import HeroSection from '../components/HeroSection';
 import SectionHeader from '../components/SectionHeader';
@@ -8,7 +9,7 @@ import PostCard from '../components/PostCard';
 import CreatePostForm from '../components/CreatePostForm';
 
 export default function Home() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(demoEvents);
   const [venues, setVenues] = useState([]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

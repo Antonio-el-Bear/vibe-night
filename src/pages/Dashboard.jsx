@@ -2,6 +2,7 @@
 
 import { CalendarDays, MapPin, Users, Activity } from "lucide-react";
 import { useState } from "react";
+import { demoEvents } from '../lib/query-clients';
 
 const fakeVenues = [
   { id: 1, name: "Velvet Lounge" },
@@ -21,18 +22,16 @@ const fakePosts = [
 export default function Dashboard() {
   // Demo stats
   const stats = {
-    events: 12,
+    events: demoEvents.length,
     venues: fakeVenues.length,
     staff: 8,
     posts: fakePosts.length,
   };
-  const recentEvents = [
-    { id: 1, title: "Jazz & Cocktails Evening", venue: "The Botanical Bar", genre: "Jazz", date: "MAR 29", status: "upcoming" },
-    { id: 2, title: "House Party", venue: "Velvet Lounge", genre: "House", date: "APR 2", status: "upcoming" },
-    { id: 3, title: "Amapiano Night", venue: "Club Nova", genre: "Amapiano", date: "APR 5", status: "upcoming" },
-    { id: 4, title: "Hip Hop Bash", venue: "Jazz Bar", genre: "Hip Hop", date: "APR 8", status: "upcoming" },
-    { id: 5, title: "RnB Vibes", venue: "Velvet Lounge", genre: "R&B", date: "APR 12", status: "upcoming" },
-  ];
+  const recentEvents = demoEvents.slice(0, 8).map(ev => ({
+    ...ev,
+    venue: ev.venue_name,
+    date: new Date(ev.date).toLocaleString('en-US', { month: 'short', day: 'numeric' }).toUpperCase(),
+  }));
   const [modal, setModal] = useState(null);
 
   return (

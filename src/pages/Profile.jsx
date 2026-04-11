@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { demoEvents } from '../lib/query-clients';
 import { CalendarDays, Heart, MessageCircle, LogOut, Settings } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -13,20 +14,12 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState('posts');
 
   useEffect(() => {
-    async function fetchData() {
-      const userData = null; // base44 removed, replace with real user fetch logic
-      setUser(userData);
-      if (userData) {
-        const [posts, rsvps] = await Promise.all([
-          [], // Placeholder for posts
-          [], // Placeholder for RSVPs
-        ]);
-        setMyPosts(posts);
-        setMyRsvps(rsvps);
-      }
-      setLoading(false);
-    }
-    fetchData();
+    // Demo: always show all demoEvents as RSVPs for demo user
+    const userData = { full_name: 'Demo User', email: 'demo@vibenight.com' };
+    setUser(userData);
+    setMyPosts([]);
+    setMyRsvps(demoEvents.map(e => ({ ...e, status: 'going' })));
+    setLoading(false);
   }, []);
 
   if (loading) {
