@@ -9,7 +9,9 @@ export const demoEvents = [
 		time: "20:00",
 		image_url: "https://images.unsplash.com/photo-1464983953574-0892a716854b?w=600&q=80",
 		status: "upcoming",
-		description: "A night of smooth jazz and signature cocktails at The Botanical Bar."
+		price: 120,
+		rsvp_count: 42,
+		description: "A night of smooth jazz and signature cocktails at The Botanical Bar. Dress code: Elegant. Live band starts at 8pm. Complimentary welcome drink for the first 30 guests."
 	},
 	{
 		id: 2,
@@ -20,7 +22,9 @@ export const demoEvents = [
 		time: "22:00",
 		image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
 		status: "upcoming",
-		description: "Dance all night to the best house music in town!"
+		price: 80,
+		rsvp_count: 67,
+		description: "Dance all night to the best house music in town! Guest DJ: DJ Flex. Glow sticks and party favors provided. Doors open at 9pm."
 	},
 	{
 		id: 3,
@@ -31,7 +35,9 @@ export const demoEvents = [
 		time: "21:00",
 		image_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80",
 		status: "upcoming",
-		description: "Experience the hottest Amapiano tracks with live DJs."
+		price: 100,
+		rsvp_count: 54,
+		description: "Experience the hottest Amapiano tracks with live DJs. Special guest: DJ Sbu. Free shots for the first 50 attendees."
 	},
 	{
 		id: 4,
@@ -42,7 +48,9 @@ export const demoEvents = [
 		time: "20:30",
 		image_url: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=600&q=80",
 		status: "upcoming",
-		description: "Hip hop artists and DJs take over the Jazz Bar."
+		price: 90,
+		rsvp_count: 38,
+		description: "Hip hop artists and DJs take over the Jazz Bar. Rap battle at midnight. Prizes for best dancer."
 	},
 	{
 		id: 5,
@@ -53,7 +61,9 @@ export const demoEvents = [
 		time: "19:00",
 		image_url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600&q=80",
 		status: "upcoming",
-		description: "Smooth R&B and chill vibes all night."
+		price: 70,
+		rsvp_count: 29,
+		description: "Smooth R&B and chill vibes all night. Couples get a free dessert. Dress to impress."
 	},
 	{
 		id: 6,
@@ -64,7 +74,9 @@ export const demoEvents = [
 		time: "23:00",
 		image_url: "https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?w=600&q=80",
 		status: "live",
-		description: "Don't miss the hottest DJ set of the month!"
+		price: 150,
+		rsvp_count: 73,
+		description: "Don't miss the hottest DJ set of the month! Free entry before 10pm. Sponsored by Red Bull."
 	},
 	{
 		id: 7,
@@ -75,7 +87,9 @@ export const demoEvents = [
 		time: "20:00",
 		image_url: "https://images.unsplash.com/photo-1464983953574-0892a716854b?w=600&q=80",
 		status: "sold_out",
-		description: "Exclusive VIP event. Tickets sold out!"
+		price: 300,
+		rsvp_count: 100,
+		description: "Exclusive VIP event. Tickets sold out! Red carpet entrance. Complimentary champagne. Strictly by invitation."
 	},
 	{
 		id: 8,
@@ -86,7 +100,9 @@ export const demoEvents = [
 		time: "21:00",
 		image_url: "https://images.unsplash.com/photo-1503676382389-4809596d5290?w=600&q=80",
 		status: "upcoming",
-		description: "Enjoy live performances from top local artists."
+		price: 110,
+		rsvp_count: 34,
+		description: "Enjoy live performances from top local artists. Open mic from 10pm. Food stalls available."
 	},
 	{
 		id: 9,
@@ -97,7 +113,9 @@ export const demoEvents = [
 		time: "22:30",
 		image_url: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=600&q=80",
 		status: "upcoming",
-		description: "Feel the rhythm with the best Afrobeats DJs in the city!"
+		price: 95,
+		rsvp_count: 48,
+		description: "Feel the rhythm with the best Afrobeats DJs in the city! Dance contest at midnight."
 	},
 	{
 		id: 10,
@@ -108,7 +126,9 @@ export const demoEvents = [
 		time: "23:30",
 		image_url: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=600&q=80",
 		status: "upcoming",
-		description: "A night of relentless techno beats and lights."
+		price: 85,
+		rsvp_count: 27,
+		description: "A night of relentless techno beats and lights. Visuals by VJ Nova. Free glow paint."
 	},
 	{
 		id: 11,
@@ -119,7 +139,9 @@ export const demoEvents = [
 		time: "20:00",
 		image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
 		status: "upcoming",
-		description: "Throwback night with classic hip hop and R&B."
+		price: 60,
+		rsvp_count: 19,
+		description: "Throwback night with classic hip hop and R&B. Dress retro for a free drink."
 	},
 	{
 		id: 12,
@@ -130,7 +152,9 @@ export const demoEvents = [
 		time: "18:00",
 		image_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80",
 		status: "upcoming",
-		description: "Chill jazz and cocktails as the sun goes down."
+		price: 50,
+		rsvp_count: 22,
+		description: "Chill jazz and cocktails as the sun goes down. Outdoor seating available. Happy hour 6-7pm."
 	},
 ];
 import { QueryClient } from '@tanstack/react-query';
