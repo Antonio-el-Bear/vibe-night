@@ -1,13 +1,30 @@
 
+
 import { CalendarDays, MapPin, Users, Activity } from "lucide-react";
+import { useState } from "react";
+
+const fakeVenues = [
+  { id: 1, name: "Velvet Lounge" },
+  { id: 2, name: "Jazz Bar" },
+  { id: 3, name: "Club Nova" },
+  { id: 4, name: "The Botanical Bar" },
+];
+const fakePosts = [
+  { id: 1, author: "Jane Doe", content: "Had an amazing night at Velvet Lounge!" },
+  { id: 2, author: "DJ Flex", content: "Spinning again this Friday!" },
+  { id: 3, author: "Emily Carter", content: "Try my new cocktail at the bar!" },
+  { id: 4, author: "Mike Brown", content: "Security tip: keep your valuables safe." },
+  { id: 5, author: "Sarah Lee", content: "Table service with a smile!" },
+  { id: 6, author: "Nina Patel", content: "Proud of our team tonight." },
+];
 
 export default function Dashboard() {
-  // Placeholder stats
+  // Demo stats
   const stats = {
     events: 12,
-    venues: 4,
+    venues: fakeVenues.length,
     staff: 8,
-    posts: 23,
+    posts: fakePosts.length,
   };
   const recentEvents = [
     { id: 1, title: "Jazz & Cocktails Evening", venue: "The Botanical Bar", genre: "Jazz", date: "MAR 29", status: "upcoming" },
@@ -16,6 +33,7 @@ export default function Dashboard() {
     { id: 4, title: "Hip Hop Bash", venue: "Jazz Bar", genre: "Hip Hop", date: "APR 8", status: "upcoming" },
     { id: 5, title: "RnB Vibes", venue: "Velvet Lounge", genre: "R&B", date: "APR 12", status: "upcoming" },
   ];
+  const [modal, setModal] = useState(null);
 
   return (
     <div className="max-w-5xl mx-auto px-4 pt-12 pb-8">
@@ -50,22 +68,22 @@ export default function Dashboard() {
         <div className="rounded-2xl bg-gradient-to-br from-pink-600 to-pink-400 p-6 text-white flex flex-col justify-between min-h-[120px] shadow-lg">
           <div className="font-bold text-lg mb-1">Manage Staff</div>
           <div className="text-sm mb-3">Table girls, managers & more</div>
-          <button className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-4 py-2 w-fit transition">Go</button>
+          <button onClick={() => setModal('staff')} className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-4 py-2 w-fit transition">Go</button>
         </div>
         <div className="rounded-2xl bg-gradient-to-br from-purple-700 to-pink-500 p-6 text-white flex flex-col justify-between min-h-[120px] shadow-lg">
           <div className="font-bold text-lg mb-1">Events</div>
           <div className="text-sm mb-3">View & manage upcoming events</div>
-          <button className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-4 py-2 w-fit transition">Go</button>
+          <button onClick={() => setModal('events')} className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-4 py-2 w-fit transition">Go</button>
         </div>
         <div className="rounded-2xl bg-gradient-to-br from-green-700 to-pink-400 p-6 text-white flex flex-col justify-between min-h-[120px] shadow-lg">
           <div className="font-bold text-lg mb-1">Venues</div>
           <div className="text-sm mb-3">Browse and manage club venues</div>
-          <button className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-4 py-2 w-fit transition">Go</button>
+          <button onClick={() => setModal('venues')} className="bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl px-4 py-2 w-fit transition">Go</button>
         </div>
       </div>
 
       {/* Recent Events */}
-      <div className="bg-[#18181b] rounded-2xl border border-[#27272a] p-6">
+      <div className="bg-[#18181b] rounded-2xl border border-[#27272a] p-6 mb-10">
         <div className="flex items-center justify-between mb-4">
           <div className="font-bold text-lg text-white">Recent Events</div>
           <a href="#" className="text-pink-500 text-sm font-medium">See all</a>
@@ -85,6 +103,52 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
+      {/* Demo modals for Go buttons */}
+      {modal === 'staff' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-[#18181b] rounded-2xl p-8 w-full max-w-md text-white relative">
+            <button onClick={() => setModal(null)} className="absolute top-3 right-3 text-white/60 hover:text-white text-xl">&times;</button>
+            <div className="font-bold text-2xl mb-2">Staff Members</div>
+            <ul className="space-y-2">
+              <li>Jane Doe (Table Girl, Velvet Lounge)</li>
+              <li>John Smith (Manager, Jazz Bar)</li>
+              <li>Emily Carter (Bartender, Velvet Lounge)</li>
+              <li>Mike Brown (Security, Club Nova)</li>
+              <li>DJ Flex (DJ, Jazz Bar)</li>
+              <li>Sarah Lee (Table Girl, Club Nova)</li>
+              <li>Carlos Vega (Bartender, Jazz Bar)</li>
+              <li>Nina Patel (Manager, Velvet Lounge)</li>
+            </ul>
+          </div>
+        </div>
+      )}
+      {modal === 'events' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-[#18181b] rounded-2xl p-8 w-full max-w-md text-white relative">
+            <button onClick={() => setModal(null)} className="absolute top-3 right-3 text-white/60 hover:text-white text-xl">&times;</button>
+            <div className="font-bold text-2xl mb-2">Upcoming Events</div>
+            <ul className="space-y-2">
+              {recentEvents.map(ev => (
+                <li key={ev.id}>{ev.title} ({ev.genre}, {ev.venue})</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+      {modal === 'venues' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-[#18181b] rounded-2xl p-8 w-full max-w-md text-white relative">
+            <button onClick={() => setModal(null)} className="absolute top-3 right-3 text-white/60 hover:text-white text-xl">&times;</button>
+            <div className="font-bold text-2xl mb-2">Venues</div>
+            <ul className="space-y-2">
+              {fakeVenues.map(v => (
+                <li key={v.id}>{v.name}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
