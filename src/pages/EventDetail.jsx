@@ -16,6 +16,21 @@ export default function EventDetail() {
   const [rsvpStatus, setRsvpStatus] = useState(null);
   const [user, setUser] = useState(null);
 
+  // Club experience state
+  const FAKE_VIP_TABLES = 8;
+  const DRINKS_MENU = [
+    { name: 'Moët & Chandon', price: 1200 },
+    { name: 'Hennessy VSOP', price: 950 },
+    { name: 'Belvedere Vodka', price: 800 },
+    { name: 'Red Bull', price: 60 },
+    { name: 'Cranberry Juice', price: 40 },
+    { name: 'Heineken', price: 55 },
+  ];
+  const [showClub, setShowClub] = useState(false);
+  const [vipTables, setVipTables] = useState(FAKE_VIP_TABLES);
+  const [order, setOrder] = useState([]);
+  const [callTableGirl, setCallTableGirl] = useState(false);
+
   useEffect(() => {
     // Find the event by id from demoEvents
     const found = demoEvents.find(e => String(e.id) === String(id));
@@ -26,9 +41,11 @@ export default function EventDetail() {
 
   async function handleRSVP(status) {
     if (!user) return;
-    // TODO: Replace with new RSVP logic
     setRsvpStatus(status);
     toast({ title: status === 'going' ? "You're going! 🎉" : "Marked as interested" });
+    if (status === 'going') {
+      setTimeout(() => setShowClub(true), 600); // Delay for effect
+    }
   }
 
   if (loading) {
@@ -37,25 +54,12 @@ export default function EventDetail() {
         <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
-      const FAKE_VIP_TABLES = 8;
-      const DRINKS_MENU = [
-        { name: 'Moët & Chandon', price: 1200 },
-        { name: 'Hennessy VSOP', price: 950 },
-        { name: 'Belvedere Vodka', price: 800 },
-        { name: 'Red Bull', price: 60 },
-        { name: 'Cranberry Juice', price: 40 },
-        { name: 'Heineken', price: 55 },
-      ];
   }
 
   if (!event) {
     return (
       <div className="text-center py-20">
         <p className="text-muted-foreground">Event not found</p>
-      const [showClub, setShowClub] = useState(false);
-      const [vipTables, setVipTables] = useState(FAKE_VIP_TABLES);
-      const [order, setOrder] = useState([]);
-      const [callTableGirl, setCallTableGirl] = useState(false);
         <Link to="/events" className="text-primary mt-2 inline-block">Back to Events</Link>
       </div>
     );
@@ -73,7 +77,6 @@ export default function EventDetail() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        
         {/* Back button */}
         <Link
           to="/events"
@@ -81,7 +84,6 @@ export default function EventDetail() {
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
-
         {/* Share */}
         <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition-colors">
           <Share2 className="w-5 h-5" />
@@ -95,14 +97,12 @@ export default function EventDetail() {
         className="px-4 -mt-16 relative z-10"
       >
         <div className="flex gap-2 mb-3">
-          {/* Badge requires a 'variant' prop. Use 'default' for genre, 'destructive' for live status. */}
           {event.genre && <Badge variant="default" className="bg-primary/80 text-white border-0">{event.genre}</Badge>}
           {event.status === 'live' && <Badge variant="destructive" className="bg-red-500 text-white border-0 animate-pulse">LIVE</Badge>}
         </div>
 
         <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">{event.title}</h1>
 
-        {/* Info Grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           <div className="bg-card rounded-xl p-3 border border-border/50">
             <div className="flex items-center gap-2 text-muted-foreground mb-1">
@@ -134,7 +134,6 @@ export default function EventDetail() {
           </div>
         </div>
 
-        {/* Description */}
         {event.description && (
           <div className="mb-6">
             <h2 className="text-lg font-semibold text-foreground mb-2">About</h2>
@@ -142,7 +141,6 @@ export default function EventDetail() {
           </div>
         )}
 
-        {/* Tags */}
         {event.tags && event.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-6">
             {event.tags.map(tag => (
@@ -153,35 +151,93 @@ export default function EventDetail() {
           </div>
         )}
 
-        {/* RSVP Actions */}
-        <div className="flex gap-3">
-          <Button
-            onClick={() => handleRSVP('going')}
-            className={`flex-1 rounded-xl h-12 font-semibold text-base ${
-              rsvpStatus === 'going'
-                ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
-                : 'bg-primary hover:bg-primary/90 text-primary-foreground'
-            }`}
-          >
-            {rsvpStatus === 'going' ? (
-              <>
-                <Check className="w-5 h-5 mr-2" />
-                Going
-              </>
-            ) : (
-              event.price ? `RSVP · R${event.price}` : 'RSVP — Free'
-            )}
-          </Button>
-          <Button
-            onClick={() => handleRSVP('interested')}
-            variant="outline"
-            className={`rounded-xl h-12 px-4 ${
-              rsvpStatus === 'interested' ? 'border-pink-400 text-pink-400' : ''
-            }`}
-          >
-            <Heart className={`w-5 h-5 ${rsvpStatus === 'interested' ? 'fill-pink-400 text-pink-400' : ''}`} />
-          </Button>
-        </div>
+        {/* RSVP Actions or Club Experience */}
+        {!showClub ? (
+          <div className="flex gap-3">
+            <Button
+              onClick={() => handleRSVP('going')}
+              className={`flex-1 rounded-xl h-12 font-semibold text-base ${
+                rsvpStatus === 'going'
+                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                  : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+              }`}
+            >
+              {rsvpStatus === 'going' ? (
+                <>
+                  <Check className="w-5 h-5 mr-2" />
+                  Going
+                </>
+              ) : (
+                event.price ? `RSVP · R${event.price}` : 'RSVP — Free'
+              )}
+            </Button>
+            <Button
+              onClick={() => handleRSVP('interested')}
+              variant="outline"
+              className={`rounded-xl h-12 px-4 ${
+                rsvpStatus === 'interested' ? 'border-pink-400 text-pink-400' : ''
+              }`}
+            >
+              <Heart className={`w-5 h-5 ${rsvpStatus === 'interested' ? 'fill-pink-400 text-pink-400' : ''}`} />
+            </Button>
+          </div>
+        ) : (
+          <div className="mt-8 bg-card rounded-xl p-6 border border-primary/30 shadow-lg">
+            <h2 className="text-2xl font-bold mb-4 text-primary">Welcome to the Club 🎉</h2>
+            <div className="mb-4">
+              <span className="font-semibold">VIP Tables Available:</span> {vipTables}
+              {vipTables > 0 ? (
+                <Button
+                  className="ml-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg px-4 py-2"
+                  onClick={() => {
+                    setVipTables(vipTables - 1);
+                    toast({ title: 'VIP Table booked! 🥂' });
+                  }}
+                  disabled={vipTables === 0}
+                >
+                  Book VIP Table
+                </Button>
+              ) : (
+                <span className="ml-4 text-red-500">Sold Out</span>
+              )}
+            </div>
+            <div className="mb-4">
+              <span className="font-semibold">Order Drinks:</span>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {DRINKS_MENU.map(drink => (
+                  <Button
+                    key={drink.name}
+                    className="bg-secondary hover:bg-primary/10 text-foreground rounded-lg px-3 py-1 text-xs"
+                    onClick={() => {
+                      setOrder([...order, drink]);
+                      toast({ title: `Ordered ${drink.name}` });
+                    }}
+                  >
+                    {drink.name} <span className="ml-2 text-xs text-muted-foreground">R{drink.price}</span>
+                  </Button>
+                ))}
+              </div>
+              {order.length > 0 && (
+                <div className="mt-2 text-sm">
+                  <span className="font-semibold">Your Order:</span> {order.map(d => d.name).join(', ')}
+                </div>
+              )}
+            </div>
+            <div className="mb-4">
+              <Button
+                className="bg-pink-500 hover:bg-pink-600 text-white rounded-lg px-4 py-2"
+                onClick={() => {
+                  setCallTableGirl(true);
+                  toast({ title: 'Table girl is on her way! 💃' });
+                  setTimeout(() => setCallTableGirl(false), 2000);
+                }}
+              >
+                {callTableGirl ? 'Table Girl Coming...' : 'Call Table Girl'}
+              </Button>
+            </div>
+            <div className="text-xs text-muted-foreground">Enjoy your night! 🪩</div>
+          </div>
+        )}
       </motion.div>
     </div>
   );
