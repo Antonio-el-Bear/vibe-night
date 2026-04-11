@@ -17,59 +17,38 @@ export default function Explore() {
   const [activeGenre, setActiveGenre] = useState('All');
 
   useEffect(() => {
-    // Fake events data
-    const fakeEvents = [
-      {
-        id: 1,
-        title: 'Vibe Fest',
-        genre: 'Afrobeats',
-        venue_name: 'Club Vibenight',
-        date: '2026-04-15',
-        description: 'A night of Afrobeats and fun!'
-      },
-      {
-        id: 2,
-        title: 'House Party',
-        genre: 'House',
-        venue_name: 'The Groove Lounge',
-        date: '2026-04-20',
-        description: 'House music all night long.'
-      },
-      {
-        id: 3,
-        title: 'Jazz & Chill',
-        genre: 'Jazz',
-        venue_name: 'Blue Note',
-        date: '2026-04-22',
-        description: 'Smooth jazz and good vibes.'
+    const apiKey = import.meta.env.VITE_TICKETMASTER_CONSUMER_KEY;
+    async function fetchEvents() {
+      setLoading(true);
+      try {
+        const res = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&size=10`);
+        const data = await res.json();
+        if (data._embedded && data._embedded.events) {
+          // Map Ticketmaster events to your event format
+          const events = data._embedded.events.map(ev => ({
+            id: ev.id,
+            title: ev.name,
+            genre: ev.classifications?.[0]?.genre?.name || 'Other',
+            venue_name: ev._embedded?.venues?.[0]?.name || '',
+            date: ev.dates?.start?.localDate || '',
+            time: ev.dates?.start?.localTime || '',
+            image_url: ev.images?.[0]?.url || 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80',
+            price: ev.priceRanges?.[0]?.min || '',
+            rsvp_count: 0, // Ticketmaster does not provide attendee count
+            description: ev.info || ev.pleaseNote || ''
+          }));
+          setEvents(events);
+        } else {
+          setEvents([]);
+        }
+      } catch (e) {
+        setEvents([]);
       }
-    ];
-
-    // Fake venues data
-    const fakeVenues = [
-      {
-        id: 1,
-        name: 'Club Vibenight',
-        location: 'Downtown',
-        capacity: 300
-      },
-      {
-        id: 2,
-        name: 'The Groove Lounge',
-        location: 'Uptown',
-        capacity: 150
-      },
-      {
-        id: 3,
-        name: 'Blue Note',
-        location: 'City Center',
-        capacity: 100
-      }
-    ];
-
-    setEvents(fakeEvents);
-    setVenues(fakeVenues);
-    setLoading(false);
+      // Venues can be fetched similarly if needed
+      setVenues([]);
+      setLoading(false);
+    }
+    fetchEvents();
   }, []);
 
   const filteredEvents = events.filter(e => {

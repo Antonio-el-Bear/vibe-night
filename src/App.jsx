@@ -13,6 +13,10 @@ import EventDetail from './pages/EventDetail';
 import Venues from './pages/Venues';
 import VenueDetail from './pages/VenueDetail';
 import Profile from './pages/Profile';
+import Settings from './pages/Settings';
+import Notifications from './pages/Notifications';
+import Staff from './pages/Staff';
+import Dashboard from './pages/Dashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -48,6 +52,10 @@ const AuthenticatedApp = () => {
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:id" element={<VenueDetail />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/staff" element={<Staff />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
