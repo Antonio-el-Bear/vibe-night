@@ -10,20 +10,21 @@ import CreatePostForm from '../components/CreatePostForm';
 
 export default function Home() {
   const [events, setEvents] = useState(demoEvents);
-  const [venues, setVenues] = useState([]);
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchData() {
-      // TODO: Replace with new API calls
-      setEvents([]); // Placeholder
-      setVenues([]); // Placeholder
-      setPosts([]); // Placeholder
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
+  const [venues, setVenues] = useState([
+    { id: 1, name: "Velvet Lounge" },
+    { id: 2, name: "Jazz Bar" },
+    { id: 3, name: "Club Nova" },
+    { id: 4, name: "The Botanical Bar" },
+  ]);
+  const [posts, setPosts] = useState([
+    { id: 1, author: "Jane Doe", content: "Had an amazing night at Velvet Lounge!" },
+    { id: 2, author: "DJ Flex", content: "Spinning again this Friday!" },
+    { id: 3, author: "Emily Carter", content: "Try my new cocktail at the bar!" },
+    { id: 4, author: "Mike Brown", content: "Security tip: keep your valuables safe." },
+    { id: 5, author: "Sarah Lee", content: "Table service with a smile!" },
+    { id: 6, author: "Nina Patel", content: "Proud of our team tonight." },
+  ]);
+  const [loading, setLoading] = useState(false);
 
   if (loading) {
     return (
