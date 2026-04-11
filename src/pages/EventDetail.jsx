@@ -37,12 +37,25 @@ export default function EventDetail() {
         <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
+      const FAKE_VIP_TABLES = 8;
+      const DRINKS_MENU = [
+        { name: 'Moët & Chandon', price: 1200 },
+        { name: 'Hennessy VSOP', price: 950 },
+        { name: 'Belvedere Vodka', price: 800 },
+        { name: 'Red Bull', price: 60 },
+        { name: 'Cranberry Juice', price: 40 },
+        { name: 'Heineken', price: 55 },
+      ];
   }
 
   if (!event) {
     return (
       <div className="text-center py-20">
         <p className="text-muted-foreground">Event not found</p>
+      const [showClub, setShowClub] = useState(false);
+      const [vipTables, setVipTables] = useState(FAKE_VIP_TABLES);
+      const [order, setOrder] = useState([]);
+      const [callTableGirl, setCallTableGirl] = useState(false);
         <Link to="/events" className="text-primary mt-2 inline-block">Back to Events</Link>
       </div>
     );
