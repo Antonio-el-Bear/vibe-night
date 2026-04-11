@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { demoEvents } from '../lib/query-clients';
 // Removed base44 import (legacy)
 import { Search, TrendingUp, Flame } from 'lucide-react';
 import { Input } from '@/components/ui/input';
