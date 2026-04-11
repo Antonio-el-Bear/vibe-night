@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { demoEvents } from '../lib/query-clients';
 import { ArrowLeft, CalendarDays, MapPin, Clock, Users, Share2, Heart, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -16,14 +17,11 @@ export default function EventDetail() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      // TODO: Replace with new API calls
-      setEvent(null); // Placeholder
-      setUser(null); // Placeholder
-      // setRsvpStatus(null); // Placeholder
-      setLoading(false);
-    }
-    fetchData();
+    // Find the event by id from demoEvents
+    const found = demoEvents.find(e => String(e.id) === String(id));
+    setEvent(found || null);
+    setUser({ full_name: 'Demo User', email: 'demo@vibenight.com' });
+    setLoading(false);
   }, [id]);
 
   async function handleRSVP(status) {
