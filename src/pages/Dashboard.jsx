@@ -4,14 +4,17 @@ import { CalendarDays, MapPin, Users, Activity } from "lucide-react";
 export default function Dashboard() {
   // Placeholder stats
   const stats = {
-    events: 6,
-    venues: 6,
-    staff: 0,
-    posts: 5,
+    events: 12,
+    venues: 4,
+    staff: 8,
+    posts: 23,
   };
   const recentEvents = [
     { id: 1, title: "Jazz & Cocktails Evening", venue: "The Botanical Bar", genre: "Jazz", date: "MAR 29", status: "upcoming" },
-    // Add more events as needed
+    { id: 2, title: "House Party", venue: "Velvet Lounge", genre: "House", date: "APR 2", status: "upcoming" },
+    { id: 3, title: "Amapiano Night", venue: "Club Nova", genre: "Amapiano", date: "APR 5", status: "upcoming" },
+    { id: 4, title: "Hip Hop Bash", venue: "Jazz Bar", genre: "Hip Hop", date: "APR 8", status: "upcoming" },
+    { id: 5, title: "RnB Vibes", venue: "Velvet Lounge", genre: "R&B", date: "APR 12", status: "upcoming" },
   ];
 
   return (
