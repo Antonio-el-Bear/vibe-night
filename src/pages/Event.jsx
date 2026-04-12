@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import { demoEvents } from '../lib/query-clients';
+import { CalendarDays } from 'lucide-react';
+import EventCard from '../components/EventCard';
+import { motion } from 'framer-motion';
 
 export default function Events() {
   const [filter, setFilter] = useState('all');
