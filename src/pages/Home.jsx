@@ -5,8 +5,8 @@ import HeroSection from '../components/HeroSection';
 import SectionHeader from '../components/SectionHeader';
 import EventCard from '../components/EventCard';
 import VenueCard from '../components/VenueCard';
-import PostCard from '../components/PostCard';
-import CreatePostForm from '../components/CreatePostForm';
+import ClipCard from '../components/ClipCard';
+import CreateClipForm from '../components/CreateClipForm';
 
 export default function Home() {
   const [events, setEvents] = useState(demoEvents);
@@ -16,13 +16,48 @@ export default function Home() {
     { id: 3, name: "Club Nova" },
     { id: 4, name: "The Botanical Bar" },
   ]);
-  const [posts, setPosts] = useState([
-    { id: 1, author: "Jane Doe", content: "Had an amazing night at Velvet Lounge!" },
-    { id: 2, author: "DJ Flex", content: "Spinning again this Friday!" },
-    { id: 3, author: "Emily Carter", content: "Try my new cocktail at the bar!" },
-    { id: 4, author: "Mike Brown", content: "Security tip: keep your valuables safe." },
-    { id: 5, author: "Sarah Lee", content: "Table service with a smile!" },
-    { id: 6, author: "Nina Patel", content: "Proud of our team tonight." },
+  const [clips, setClips] = useState([
+    // Demo clips (replace with real data)
+    {
+      id: 1,
+      author_name: "Jane Doe",
+      author_email: "jane@example.com",
+      created_date: new Date(),
+      type: "video",
+      media_url: "https://www.w3schools.com/html/mov_bbb.mp4",
+    },
+    {
+      id: 2,
+      author_name: "DJ Flex",
+      author_email: "djflex@example.com",
+      created_date: new Date(),
+      type: "video",
+      media_url: "https://www.w3schools.com/html/movie.mp4",
+    },
+    {
+      id: 3,
+      author_name: "Emily Carter",
+      author_email: "emily@example.com",
+      created_date: new Date(),
+      type: "video",
+      media_url: "https://samplelib.com/mp4/sample-720p.mp4",
+    },
+    {
+      id: 4,
+      author_name: "Mike Brown",
+      author_email: "mike@example.com",
+      created_date: new Date(),
+      type: "image",
+      media_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4",
+    },
+    {
+      id: 5,
+      author_name: "Sarah Lee",
+      author_email: "sarah@example.com",
+      created_date: new Date(),
+      type: "image",
+      media_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+    },
   ]);
   const [loading, setLoading] = useState(false);
 
@@ -80,25 +115,24 @@ export default function Home() {
         </section>
       )}
 
-      {/* Social Feed */}
+      {/* Media Clips Feed */}
       <section className="px-4 mb-8">
-        {/* SectionHeader requires 'linkTo' prop. Provide a placeholder or actual route. */}
-        <SectionHeader title="The Vibe" subtitle="What people are saying" linkTo="/vibe" />
-        <CreatePostForm onPostCreated={(newPost) => setPosts(prev => [newPost, ...prev])} />
+        <SectionHeader title="Vibe Night Clips" subtitle="Share and enjoy moments" linkTo="/clips" />
+        <CreateClipForm onClipCreated={(newClip) => setClips(prev => [newClip, ...prev])} />
         <div className="space-y-4 mt-4">
-          {posts.map((post, i) => (
+          {clips.map((clip, i) => (
             <motion.div
-              key={post.id}
+              key={clip.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
             >
-              <PostCard post={post} />
+              <ClipCard clip={clip} />
             </motion.div>
           ))}
-          {posts.length === 0 && (
+          {clips.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              <p className="text-sm">No posts yet. Share your first moment!</p>
+              <p className="text-sm">No clips yet. Be the first to share a vibe!</p>
             </div>
           )}
         </div>
