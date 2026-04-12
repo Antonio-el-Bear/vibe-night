@@ -17,14 +17,14 @@ export default function Home() {
     { id: 4, name: "The Botanical Bar" },
   ]);
   const [clips, setClips] = useState([
-    // Demo clips (replace with real data)
+    // Demo clips (nightlife, party, event themed)
     {
       id: 1,
       author_name: "Jane Doe",
       author_email: "jane@example.com",
       created_date: new Date(),
       type: "video",
-      media_url: "https://www.w3schools.com/html/mov_bbb.mp4",
+      media_url: "https://vod-progressive.akamaized.net/exp=1713080000~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F3536%2F16%2F419017013%2F1808570132.mp4~hmac=7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2/vimeo-prod-skyfire-std-us/01/3536/16/419017013/1808570132.mp4?filename=party-dance.mp4",
     },
     {
       id: 2,
@@ -32,15 +32,15 @@ export default function Home() {
       author_email: "djflex@example.com",
       created_date: new Date(),
       type: "video",
-      media_url: "https://www.w3schools.com/html/movie.mp4",
+      media_url: "https://vod-progressive.akamaized.net/exp=1713080000~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F3536%2F16%2F419017013%2F1808570132.mp4~hmac=7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2/vimeo-prod-skyfire-std-us/01/3536/16/419017013/1808570132.mp4?filename=club-dj.mp4",
     },
     {
       id: 3,
       author_name: "Emily Carter",
       author_email: "emily@example.com",
       created_date: new Date(),
-      type: "video",
-      media_url: "https://samplelib.com/mp4/sample-720p.mp4",
+      type: "image",
+      media_url: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
     },
     {
       id: 4,
@@ -48,7 +48,7 @@ export default function Home() {
       author_email: "mike@example.com",
       created_date: new Date(),
       type: "image",
-      media_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4",
+      media_url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
     },
     {
       id: 5,
@@ -56,7 +56,7 @@ export default function Home() {
       author_email: "sarah@example.com",
       created_date: new Date(),
       type: "image",
-      media_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      media_url: "https://images.unsplash.com/photo-1515168833906-d2a3b82b302b?auto=format&fit=crop&w=800&q=80",
     },
   ]);
   const [loading, setLoading] = useState(false);
