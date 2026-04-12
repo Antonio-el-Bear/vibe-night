@@ -7,6 +7,7 @@ import EventCard from '../components/EventCard';
 import VenueCard from '../components/VenueCard';
 import ClipCard from '../components/ClipCard';
 import CreateClipForm from '../components/CreateClipForm';
+import ReelsViewer from '../components/ReelsViewer';
 
 export default function Home() {
   const [events, setEvents] = useState(demoEvents);
@@ -60,6 +61,8 @@ export default function Home() {
     },
   ]);
   const [loading, setLoading] = useState(false);
+  const [reelsOpen, setReelsOpen] = useState(false);
+  const [reelsIndex, setReelsIndex] = useState(0);
 
   if (loading) {
     return (
@@ -127,7 +130,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
             >
-              <ClipCard clip={clip} />
+              <div onClick={() => { setReelsOpen(true); setReelsIndex(i); }} className="cursor-pointer">
+                <ClipCard clip={clip} />
+              </div>
             </motion.div>
           ))}
           {clips.length === 0 && (
@@ -136,6 +141,13 @@ export default function Home() {
             </div>
           )}
         </div>
+        {reelsOpen && (
+          <ReelsViewer
+            clips={clips}
+            initialIndex={reelsIndex}
+            onClose={() => setReelsOpen(false)}
+          />
+        )}
       </section>
     </div>
   );
