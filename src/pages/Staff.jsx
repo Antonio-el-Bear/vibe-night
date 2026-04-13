@@ -27,28 +27,7 @@ const fakeStaff = [
   const [chatInput, setChatInput] = useState("");
   const [notifications, setNotifications] = useState({}); // { staffId/group: count }
   
-  // Simulate receiving new messages for demo (randomly add messages to chats)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Only simulate if no chat modal is open
-      if (!chatWith && staff.length > 0) {
-        const random = Math.random();
-        if (random < 0.2) { // 20% chance
-          // Pick a random staff member or group
-          const targets = ['group', ...staff.map(s => s.id)];
-          const target = targets[Math.floor(Math.random() * targets.length)];
-          const fakeMsg = {
-            from: 'them',
-            text: target === 'group' ? 'Announcement: Please check in!' : 'Hi, do you need anything?',
-            time: Date.now(),
-          };
-          setMessages(m => ({ ...m, [target]: [...(m[target] || []), fakeMsg] }));
-          setNotifications(n => ({ ...n, [target]: (n[target] || 0) + 1 }));
-        }
-      }
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [chatWith, staff]);
+
 
   function handleClockIn(id) {
     setStaff(staff => staff.map(s =>
