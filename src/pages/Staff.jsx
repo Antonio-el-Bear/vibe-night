@@ -1,6 +1,7 @@
 
 
 import { useState } from "react";
+import { MessageCircle, Users } from 'lucide-react';
 import moment from "moment";
 import { Button } from '@/components/ui/button';
 
@@ -17,11 +18,13 @@ const fakeStaff = [
   { id: 8, name: "Nina Patel", role: "Manager", venue: "Velvet Lounge", avatar: "https://randomuser.me/api/portraits/women/33.jpg", bio: "Nina is the heart of the Velvet Lounge team.", onDuty: false, shiftEnd: null, clockIn: null, clockOut: null },
 ];
 
-export default function Staff() {
   const [search, setSearch] = useState("");
   const [activeRole, setActiveRole] = useState("All");
   const [modal, setModal] = useState(null); // For demo profile modal
   const [staff, setStaff] = useState(fakeStaff);
+  const [chatWith, setChatWith] = useState(null); // staff member or 'group'
+  const [messages, setMessages] = useState({}); // { staffId/group: [{from, text, time}] }
+  const [chatInput, setChatInput] = useState("");
 
   function handleClockIn(id) {
     setStaff(staff => staff.map(s =>
@@ -109,7 +112,66 @@ export default function Staff() {
                       {member.onDuty ? "Clock Out" : "Clock In"}
                     </Button>
                     <button onClick={() => setModal(member)} className="self-end bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-lg px-3 py-1 transition">View Profile</button>
+                    <button onClick={() => { setChatWith(member); setChatInput(""); }} className="self-end flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-lg px-3 py-1 transition mt-1"><MessageCircle className="w-4 h-4" /> Chat</button>
                   </div>
+                      <div className="flex justify-end mt-8">
+                        <button onClick={() => { setChatWith('group'); setChatInput(""); }} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl px-5 py-2 text-base transition">
+                          <Users className="w-5 h-5" /> Group Chat / Announcements
+                        </button>
+                      </div>
+                      {/* Chat Modal */}
+                      {chatWith && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                          <div className="bg-[#18181b] rounded-2xl p-6 w-full max-w-md text-white relative flex flex-col max-h-[90vh]">
+                            <button onClick={() => setChatWith(null)} className="absolute top-3 right-3 text-white/60 hover:text-white text-xl">&times;</button>
+                            <div className="flex items-center gap-3 mb-4">
+                              {chatWith === 'group' ? (
+                                <>
+                                  <Users className="w-8 h-8 text-green-400" />
+                                  <div>
+                                    <div className="font-bold text-lg">Group Chat</div>
+                                    <div className="text-xs text-white/60">Announcements to all staff</div>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <img src={chatWith.avatar} alt={chatWith.name} className="w-8 h-8 rounded-full object-cover border-2 border-blue-400" />
+                                  <div>
+                                    <div className="font-bold text-lg">{chatWith.name}</div>
+                                    <div className="text-xs text-white/60">{chatWith.role} @ {chatWith.venue}</div>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                            <div className="flex-1 overflow-y-auto mb-3 space-y-2 pr-1" style={{ minHeight: 200, maxHeight: 300 }}>
+                              {(messages[chatWith === 'group' ? 'group' : chatWith.id] || []).map((msg, i) => (
+                                <div key={i} className={`flex ${msg.from === 'me' ? 'justify-end' : 'justify-start'}`}>
+                                  <div className={`rounded-xl px-3 py-2 text-sm ${msg.from === 'me' ? 'bg-blue-500 text-white' : 'bg-white/10 text-white'}`}>{msg.text}</div>
+                                </div>
+                              ))}
+                              {(messages[chatWith === 'group' ? 'group' : chatWith.id] || []).length === 0 && (
+                                <div className="text-center text-white/40 text-xs">No messages yet.</div>
+                              )}
+                            </div>
+                            <form onSubmit={e => {
+                              e.preventDefault();
+                              if (!chatInput.trim()) return;
+                              const key = chatWith === 'group' ? 'group' : chatWith.id;
+                              setMessages(m => ({ ...m, [key]: [...(m[key] || []), { from: 'me', text: chatInput, time: Date.now() }] }));
+                              setChatInput("");
+                            }} className="flex gap-2 mt-2">
+                              <input
+                                type="text"
+                                value={chatInput}
+                                onChange={e => setChatInput(e.target.value)}
+                                placeholder={chatWith === 'group' ? "Send announcement..." : `Message ${chatWith.name}...`}
+                                className="flex-1 rounded-xl px-3 py-2 bg-[#23232a] text-white focus:outline-none"
+                              />
+                              <button type="submit" className="bg-blue-500 hover:bg-blue-600 rounded-xl px-4 py-2 font-semibold text-white">Send</button>
+                            </form>
+                          </div>
+                        </div>
+                      )}
                 </div>
               </div>
             ))}
