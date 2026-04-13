@@ -54,61 +54,39 @@ const fakeStaff = [
     setStaff(staff => staff.map(s =>
       s.id === id ? {
         ...s,
-        onDuty: true,
-        clockIn: moment().toISOString(),
-        clockOut: null,
-        shiftEnd: moment().add(4, 'hours').toISOString(),
-      } : s
-    ));
-    // AI: Announce clock in
-    const member = staff.find(s => s.id === id);
-    setMessages(m => ({ ...m, group: [...(m.group || []), { from: 'them', text: `${member.name} clocked in for their shift.`, time: Date.now() }] }));
-    setNotifications(n => ({ ...n, group: (n.group || 0) + 1 }));
-  }
-
-  function handleClockOut(id) {
-    setStaff(staff => staff.map(s =>
-      s.id === id ? {
-        ...s,
-        onDuty: false,
-        clockOut: moment().toISOString(),
-        shiftEnd: null,
-      } : s
-    ));
-    // AI: Announce clock out
-    const member = staff.find(s => s.id === id);
-    setMessages(m => ({ ...m, group: [...(m.group || []), { from: 'them', text: `${member.name} clocked out.`, time: Date.now() }] }));
-    setNotifications(n => ({ ...n, group: (n.group || 0) + 1 }));
-  }
-
-  return (
-    <div className="max-w-4xl mx-auto px-4 pt-12 pb-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-4xl font-extrabold text-white mb-1">Staff Profiles</h1>
-          <p className="text-lg text-white/70">Table girls, managers & club staff</p>
-        </div>
-        <button className="bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-xl px-6 py-2 text-base transition">+ Add Staff</button>
-      </div>
-
-      <div className="flex flex-col md:flex-row md:items-center gap-3 mb-8">
-        <input
-          type="text"
-          placeholder="Search by name or venue..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="md:w-96 w-full bg-[#18181b] border border-[#27272a] text-white placeholder:text-white/40 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-        />
-        <div className="flex gap-2 mt-2 md:mt-0">
-          {STAFF_ROLES.map(role => (
-            <button
-              key={role}
-              className={`rounded-xl px-4 py-1.5 text-sm font-medium border border-[#27272a] transition ${activeRole === role ? "bg-pink-500 text-white" : "bg-[#18181b] text-white/70 hover:bg-[#23232a]"}`}
-              onClick={() => setActiveRole(role)}
-              type="button"
-            >
-              {role}
-            </button>
+                            <form onSubmit={e => {
+                              e.preventDefault();
+                              if (!chatInput.trim()) return;
+                              const key = chatWith === 'group' ? 'group' : chatWith.id;
+                              setMessages(m => ({ ...m, [key]: [...(m[key] || []), { from: 'me', text: chatInput, time: Date.now() }] }));
+                              setChatInput("");
+                              // AI: Context-aware reply after short delay
+                              setTimeout(() => {
+                                let reply = '';
+                                const lower = chatInput.toLowerCase();
+                                if (lower.includes('hello') || lower.includes('hi')) {
+                                  reply = key === 'group' ? 'Hello team! 👋' : `Hi! How can I help you?`;
+                                } else if (lower.includes('shift')) {
+                                  reply = key === 'group' ? 'Reminder: Check your shift times in the app.' : `My shift ends ${moment(staff.find(s => s.id === key)?.shiftEnd).fromNow()}.`;
+                                } else if (lower.includes('clock in') || lower.includes('clock out')) {
+                                  reply = 'Got it! Logging your request.';
+                                } else if (lower.includes('thanks') || lower.includes('thank you')) {
+                                  reply = 'You’re welcome!';
+                                } else if (lower.includes('announce')) {
+                                  reply = 'Announcement sent to all staff.';
+                                } else if (lower.includes('drink') || lower.includes('order')) {
+                                  reply = 'I’ll let the bar know!';
+                                } else if (lower.includes('security')) {
+                                  reply = 'Security is on standby.';
+                                } else if (lower.includes('music') || lower.includes('dj')) {
+                                  reply = 'The DJ is ready to take requests!';
+                                } else {
+                                  reply = key === 'group' ? 'Team, please check the latest updates.' : 'Okay!';
+                                }
+                                setMessages(m => ({ ...m, [key]: [...(m[key] || []), { from: 'them', text: reply, time: Date.now() }] }));
+                                setNotifications(n => ({ ...n, [key]: (n[key] || 0) + 1 }));
+                              }, 1200);
+                            }} className="flex gap-2 mt-2">
           ))}
         </div>
       </div>
