@@ -1,6 +1,6 @@
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageCircle, Users } from 'lucide-react';
 import moment from "moment";
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,7 @@ const fakeStaff = [
   const [chatWith, setChatWith] = useState(null); // staff member or 'group'
   const [messages, setMessages] = useState({}); // { staffId/group: [{from, text, time}] }
   const [chatInput, setChatInput] = useState("");
+  const [notifications, setNotifications] = useState({}); // { staffId/group: count }
 
   function handleClockIn(id) {
     setStaff(staff => staff.map(s =>
@@ -112,11 +113,27 @@ const fakeStaff = [
                       {member.onDuty ? "Clock Out" : "Clock In"}
                     </Button>
                     <button onClick={() => setModal(member)} className="self-end bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-lg px-3 py-1 transition">View Profile</button>
-                    <button onClick={() => { setChatWith(member); setChatInput(""); }} className="self-end flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-lg px-3 py-1 transition mt-1"><MessageCircle className="w-4 h-4" /> Chat</button>
+                    <button onClick={() => {
+                      setChatWith(member);
+                      setChatInput("");
+                      setNotifications(n => ({ ...n, [member.id]: 0 }));
+                    }} className="self-end flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-lg px-3 py-1 transition mt-1">
+                      <MessageCircle className="w-4 h-4" /> Chat
+                      {notifications[member.id] > 0 && (
+                        <span className="ml-1 bg-red-500 text-white rounded-full px-2 py-0.5 text-[10px] font-bold">{notifications[member.id]}</span>
+                      )}
+                    </button>
                   </div>
                       <div className="flex justify-end mt-8">
-                        <button onClick={() => { setChatWith('group'); setChatInput(""); }} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl px-5 py-2 text-base transition">
+                        <button onClick={() => {
+                          setChatWith('group');
+                          setChatInput("");
+                          setNotifications(n => ({ ...n, group: 0 }));
+                        }} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl px-5 py-2 text-base transition">
                           <Users className="w-5 h-5" /> Group Chat / Announcements
+                          {notifications.group > 0 && (
+                            <span className="ml-1 bg-red-500 text-white rounded-full px-2 py-0.5 text-[10px] font-bold">{notifications.group}</span>
+                          )}
                         </button>
                       </div>
                       {/* Chat Modal */}
@@ -145,8 +162,11 @@ const fakeStaff = [
                             </div>
                             <div className="flex-1 overflow-y-auto mb-3 space-y-2 pr-1" style={{ minHeight: 200, maxHeight: 300 }}>
                               {(messages[chatWith === 'group' ? 'group' : chatWith.id] || []).map((msg, i) => (
-                                <div key={i} className={`flex ${msg.from === 'me' ? 'justify-end' : 'justify-start'}`}>
-                                  <div className={`rounded-xl px-3 py-2 text-sm ${msg.from === 'me' ? 'bg-blue-500 text-white' : 'bg-white/10 text-white'}`}>{msg.text}</div>
+                                <div key={i} className={`flex ${msg.from === 'me' ? 'justify-end' : 'justify-start'} items-end`}>
+                                  <div className={`rounded-xl px-3 py-2 text-sm ${msg.from === 'me' ? 'bg-blue-500 text-white' : 'bg-white/10 text-white'}`}>
+                                    {msg.text}
+                                    <div className="text-[10px] text-white/60 mt-1 text-right">{msg.time ? new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</div>
+                                  </div>
                                 </div>
                               ))}
                               {(messages[chatWith === 'group' ? 'group' : chatWith.id] || []).length === 0 && (
@@ -160,6 +180,28 @@ const fakeStaff = [
                               setMessages(m => ({ ...m, [key]: [...(m[key] || []), { from: 'me', text: chatInput, time: Date.now() }] }));
                               setChatInput("");
                             }} className="flex gap-2 mt-2">
+                                    // Simulate receiving new messages for demo (randomly add messages to chats)
+                                    useEffect(() => {
+                                      const interval = setInterval(() => {
+                                        // Only simulate if no chat modal is open
+                                        if (!chatWith && staff.length > 0) {
+                                          const random = Math.random();
+                                          if (random < 0.2) { // 20% chance
+                                            // Pick a random staff member or group
+                                            const targets = ['group', ...staff.map(s => s.id)];
+                                            const target = targets[Math.floor(Math.random() * targets.length)];
+                                            const fakeMsg = {
+                                              from: 'them',
+                                              text: target === 'group' ? 'Announcement: Please check in!' : 'Hi, do you need anything?',
+                                              time: Date.now(),
+                                            };
+                                            setMessages(m => ({ ...m, [target]: [...(m[target] || []), fakeMsg] }));
+                                            setNotifications(n => ({ ...n, [target]: (n[target] || 0) + 1 }));
+                                          }
+                                        }
+                                      }, 6000);
+                                      return () => clearInterval(interval);
+                                    }, [chatWith, staff]);
                               <input
                                 type="text"
                                 value={chatInput}
