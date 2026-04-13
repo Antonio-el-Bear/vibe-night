@@ -54,39 +54,11 @@ const fakeStaff = [
     setStaff(staff => staff.map(s =>
       s.id === id ? {
         ...s,
-                            <form onSubmit={e => {
-                              e.preventDefault();
-                              if (!chatInput.trim()) return;
-                              const key = chatWith === 'group' ? 'group' : chatWith.id;
-                              setMessages(m => ({ ...m, [key]: [...(m[key] || []), { from: 'me', text: chatInput, time: Date.now() }] }));
-                              setChatInput("");
-                              // AI: Context-aware reply after short delay
-                              setTimeout(() => {
-                                let reply = '';
-                                const lower = chatInput.toLowerCase();
-                                if (lower.includes('hello') || lower.includes('hi')) {
-                                  reply = key === 'group' ? 'Hello team! 👋' : `Hi! How can I help you?`;
-                                } else if (lower.includes('shift')) {
-                                  reply = key === 'group' ? 'Reminder: Check your shift times in the app.' : `My shift ends ${moment(staff.find(s => s.id === key)?.shiftEnd).fromNow()}.`;
-                                } else if (lower.includes('clock in') || lower.includes('clock out')) {
-                                  reply = 'Got it! Logging your request.';
-                                } else if (lower.includes('thanks') || lower.includes('thank you')) {
-                                  reply = 'You’re welcome!';
-                                } else if (lower.includes('announce')) {
-                                  reply = 'Announcement sent to all staff.';
-                                } else if (lower.includes('drink') || lower.includes('order')) {
-                                  reply = 'I’ll let the bar know!';
-                                } else if (lower.includes('security')) {
-                                  reply = 'Security is on standby.';
-                                } else if (lower.includes('music') || lower.includes('dj')) {
-                                  reply = 'The DJ is ready to take requests!';
-                                } else {
-                                  reply = key === 'group' ? 'Team, please check the latest updates.' : 'Okay!';
-                                }
-                                setMessages(m => ({ ...m, [key]: [...(m[key] || []), { from: 'them', text: reply, time: Date.now() }] }));
-                                setNotifications(n => ({ ...n, [key]: (n[key] || 0) + 1 }));
-                              }, 1200);
-                            }} className="flex gap-2 mt-2">
+        onDuty: true,
+        clockIn: Date.now(),
+        clockOut: null,
+      } : s
+    ));
           ))}
         </div>
       </div>
